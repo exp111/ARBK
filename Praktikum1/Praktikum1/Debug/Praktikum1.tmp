@@ -1,0 +1,28 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.7</VERSION>
+ <DEVICE>"ATmega8"</DEVICE>
+ <WORKING_DIR>D:\Visual Studio\Atmel\Praktikum1\Praktikum1\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>D:/Programme\AtmelStudio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc</DIR>
+  <DIR>D:\Programme\AtmelStudio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>D:\Visual Studio\Atmel\Praktikum1\Praktikum1\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>D:/Programme\AtmelStudio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m8def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>D:\Visual Studio\Atmel\Praktikum1\Praktikum1\Debug\Praktikum1.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>Praktikum1.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>Praktikum1.map</FILE>
+  <FILE>Praktikum1.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <mainloop><FILE>D:\Visual Studio\Atmel\Praktikum1\Praktikum1\main.asm</FILE><LINE>19</LINE></mainloop>
+  <wait><FILE>D:\Visual Studio\Atmel\Praktikum1\Praktikum1\main.asm</FILE><LINE>28</LINE></wait>
+ </LABELS>
+</ASSEMBLER_INFO>
