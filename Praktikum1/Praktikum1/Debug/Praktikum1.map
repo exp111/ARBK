@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.7  D:\Visual Studio\Atmel\Praktikum1\Praktikum1\main.asm Wed Oct 10 15:55:42 2018
+AVRASM ver. 2.2.7  D:\Visual Studio\Atmel\Praktikum1\Praktikum1\main.asm Thu Oct 11 12:54:24 2018
 
 
 EQU  SIGNATURE_000 0000001e
@@ -508,5 +508,7 @@ EQU  TWIaddr      00000011
 EQU  SPMRaddr     00000012
 EQU  INT_VECTORS_SIZE 00000013
 DEF  temp         r16
+DEF  led          r17
 CSEG mainloop     00000007
 CSEG wait         0000000d
+CSEG L1           0000000f

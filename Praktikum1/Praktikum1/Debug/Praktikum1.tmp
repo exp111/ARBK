@@ -22,7 +22,8 @@
   <FILE>Praktikum1.lss</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <mainloop><FILE>D:\Visual Studio\Atmel\Praktikum1\Praktikum1\main.asm</FILE><LINE>19</LINE></mainloop>
-  <wait><FILE>D:\Visual Studio\Atmel\Praktikum1\Praktikum1\main.asm</FILE><LINE>28</LINE></wait>
+  <mainloop><FILE>D:\Visual Studio\Atmel\Praktikum1\Praktikum1\main.asm</FILE><LINE>22</LINE></mainloop>
+  <wait><FILE>D:\Visual Studio\Atmel\Praktikum1\Praktikum1\main.asm</FILE><LINE>31</LINE></wait>
+  <L1><FILE>D:\Visual Studio\Atmel\Praktikum1\Praktikum1\main.asm</FILE><LINE>34</LINE></L1>
  </LABELS>
 </ASSEMBLER_INFO>
