@@ -1,15 +1,16 @@
 ;
 ; Praktikum1.asm
 ;
-; Created: 10.10.2018 15:44:21
-; Author : theex
-;
 
 ; Assembler Directives
 .def temp = r16 ; r16 is our temp var
 .def led = r17
 
-; INIT
+.ORG 0x000 ; Reset Interrupt
+rjmp INIT
+
+.ORG INT_VECTORS_SIZE
+INIT:
 	ldi temp, LOW(RAMEND) ; initialize low stack
 	out SPL, temp
 	ldi temp, HIGH(RAMEND) ; initialize high stack
