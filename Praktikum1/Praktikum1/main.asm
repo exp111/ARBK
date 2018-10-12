@@ -6,10 +6,10 @@
 .def temp = r16 ; r16 is our temp var
 .def led = r17
 
-.ORG 0x000 ; Reset Interrupt
+.ORG 0x000 ; Reset Interrupt Vector
 rjmp INIT
+; Every other Interupt is unused here
 
-.ORG INT_VECTORS_SIZE
 INIT:
 	ldi temp, LOW(RAMEND) ; initialize low stack
 	out SPL, temp
