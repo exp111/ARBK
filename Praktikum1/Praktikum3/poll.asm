@@ -8,10 +8,6 @@
 
 .ORG 0x000 ; Reset Interrupt Vector
 rjmp INIT
-.ORG INT0
-rjmp blinkGelb
-.ORG INT1
-rjmp blinkRot
 ; Every other Interupt is unused here
 
 INIT:
@@ -25,24 +21,22 @@ INIT:
 	ldi led, 0
 	
 loop:
+	mov temp, led
+	out PORTB, temp
+	rcall wait
+	clr temp
+	out PORTB, temp
+	rjmp check
+
+check:
+	in temp, PORTB
+	sbrc temp, 2
+	ldi led, 1
+	sbrc temp, 3
+	ldi led, 3
 	rjmp loop
 
-blinkGelb:
-	clr led
-	rcall wait ; sleep
-	ldi led, 1
-	rcall wait ; sleep
-	rjmp blinkGelb
-
-blinkRot:
-	clr led
-	rcall wait ; sleep
-	ldi led, 2
-	rcall wait ; sleep
-	rjmp blinkRot
-
 wait: ; delay for 1/5s -> 200000 cycles (200ms * 1 MHz)
-	out PORTB, led
     ldi r18, 6
     ldi r19, 0
     ldi r20, 0
