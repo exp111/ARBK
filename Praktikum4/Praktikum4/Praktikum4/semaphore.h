@@ -1,4 +1,5 @@
 #pragma once
+#include <Windows.h>
 
 class Semaphore
 {
@@ -13,7 +14,7 @@ public:
 		int startValue = value;
 		while (value <= startValue && value < 0)
 		{
-
+			Sleep(1);
 		}
 	}
 

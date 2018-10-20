@@ -23,7 +23,7 @@ void printFourBit()
 {
 	//mutexLock.lock();
 	sem.P();
-	for (int i = 0; i < 32; i++)
+	for (int i = 0; i <= 32; i++)
 	{
 		cout << i << endl;
 	}
