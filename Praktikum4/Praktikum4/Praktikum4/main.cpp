@@ -5,7 +5,7 @@
 using namespace std;
 
 mutex mutexLock;
-Semaphore sem = Semaphore(1);
+Semaphore sem(1);
 
 void printLowercase()
 {

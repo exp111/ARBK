@@ -6,6 +6,8 @@ class Semaphore
 {
 public:
 	Semaphore(int n = 1) : value{n} {}
+	Semaphore(const Semaphore&) = delete; //you are not allowed to copy condition_variables and mutex so no copy for you either
+	Semaphore& operator=(const Semaphore&) = delete;
 
 private:
 	int value = 1; //max threads running at the same time
@@ -31,5 +33,6 @@ public:
 	void V()
 	{
 		value++;
+		cvar.notify_one();
 	}
 };
