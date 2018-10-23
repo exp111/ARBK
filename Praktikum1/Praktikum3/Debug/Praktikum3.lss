@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.7  C:\Users\Tim\Documents\Uni\ARBK\AtmelStudio\Praktikum1\Praktikum3\main.asm Fri Oct 19 08:45:28 2018
+AVRASM ver. 2.2.7  C:\Users\Tim\Documents\Uni\ARBK\AtmelStudio\Praktikum1\Praktikum3\main.asm Tue Oct 23 15:38:14 2018
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m8def.inc'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m8def.inc'
@@ -750,68 +750,62 @@ AVRASM ver. 2.2.7  C:\Users\Tim\Documents\Uni\ARBK\AtmelStudio\Praktikum1\Prakti
                                  ; Assembler Directives
                                  .def temp = r16 ; r16 is our temp var
                                  .def led = r17
-                                 .def switch = r21
                                  
-                                 .ORG 0x000 ; Reset Interrupt Vector
-000000 c001                      rjmp INIT
-                                 .ORG 0x001
-000001 c000                      rjmp INIT
+                                 .ORG 0 ; Reset Interrupt Vector
+000000 c002                      rjmp INIT
+                                 .ORG INT0addr
+000001 c017                      rjmp blinkGelb
+                                 .ORG INT1addr
+000002 c018                      rjmp blinkRot
                                  ; Every other Interupt is unused here
                                  
                                  INIT:
-000002 e50f                      	ldi temp, LOW(RAMEND) ; initialize low stack
-000003 bf0d                      	out SPL, temp
-000004 e004                      	ldi temp, HIGH(RAMEND) ; initialize high stack
-000005 bf0e                      	out SPH, temp
-000006 e007                      	ldi temp, 7 ; 0b00000111
-000007 bb07                      	out DDRB, temp ; activate output of the first 3 b pins
+000003 e50f                      	ldi temp, LOW(RAMEND) ; initialize low stack
+000004 bf0d                      	out SPL, temp
+000005 e004                      	ldi temp, HIGH(RAMEND) ; initialize high stack
+000006 bf0e                      	out SPH, temp
+000007 e003                      	ldi temp, 3 ; 0b00000011
+000008 bb07                      	out DDRB, temp ; set b0 & b1 to out
+000009 e000                      	ldi temp, 0 ; portd to 0
+00000a bb01                      	out DDRD, temp
+00000b e00c                      	ldi temp, 12 ; d2 & d3 pullup
+00000c bb02                      	out PORTD, temp
+00000d ec00                      	ldi temp, 192 ; enable int0 & int1
+00000e bf0b                      	out GICR, temp
+00000f 9478                      	sei ; enable interupts
                                  
-000008 e011                      	ldi led, 1
-000009 e050                      	ldi switch, 0
-00000a e001                      	ldi temp, 1
+000010 e010                      	ldi led, 0
+000011 e000                      	ldi temp, 0
+                                 	
+                                 loop:
+000012 2f01                      	mov temp, led
+000013 bb08                      	out PORTB, temp
+000014 d008                      	rcall wait
+000015 2700                      	clr temp
+000016 bb08                      	out PORTB, temp
+000017 d005                      	rcall wait
+000018 cff9                      	rjmp loop
                                  
-                                 mainloop:
-00000b bb18                      	out PORTB, led ; load temp into led port
-00000c ff50                      	sbrs switch, 0 ;  if switch == 0
-00000d 0f11                      	lsl led ; left shift led
-00000e fd50                      	sbrc switch, 0 ; if switch == 1
-00000f 9516                      	lsr led ; right shift led
+                                 blinkGelb:
+000019 e011                      	ldi led, 1
+00001a 9518                      	reti
                                  
-000010 fd13                      	sbrc led, 3 ; is 4th bit set? -> change direction
-000011 c005                      	rjmp changeDir
-000012 3010                      	cpi led, 0 ; if led == 0 -> change dir
-000013 f409                      	brne notequalz
-000014 c002                      	rjmp changeDir
-                                 notequalz:
-                                 
-000015 d00b                      	rcall wait ; sleep
-000016 cff4                      	rjmp mainloop
-                                 
-                                 changeDir:
-000017 ff50                      	sbrs switch, 0 ; if switch == 0 -> right shift as we're at last led + 1
-000018 9516                      	lsr led
-000019 fd50                      	sbrc switch, 0 ; if switch == 1 -> set led to 1 as we're at 0
-00001a e011                      	ldi led, 1
-00001b fd50                      	sbrc switch, 0 ; toggle switch
-00001c c002                      	rjmp change2
-00001d e051                      	ldi switch, 1
-00001e cfec                      	rjmp mainloop
-                                 change2:
-00001f e050                      	ldi switch, 0
-000020 cfea                      	rjmp mainloop
+                                 blinkRot:
+00001b e012                      	ldi led, 2
+00001c 9518                      	reti
                                  
                                  wait: ; delay for 1/5s -> 200000 cycles (200ms * 1 MHz)
-000021 e026                          ldi r18, 6
-000022 e030                          ldi r19,0
-000023 e040                          ldi r20,0
+00001d e026                          ldi r18, 6
+00001e e030                          ldi r19, 0
+00001f e040                          ldi r20, 0
                                  L1: 
-000024 954a                          dec  r20
-000025 f7f1                          brne L1
-000026 953a                          dec  r19
-000027 f7e1                          brne L1
-000028 952a                          dec  r18
-000029 f7d1                          brne L1
-00002a 9508                      ret
+000020 954a                          dec  r20
+000021 f7f1                          brne L1
+000022 953a                          dec  r19
+000023 f7e1                          brne L1
+000024 952a                          dec  r18
+000025 f7d1                          brne L1
+000026 9508                      ret
 
 
 RESOURCE USE INFORMATION
@@ -831,37 +825,37 @@ counted separately from r26..r31 here.
 "ATmega8" register use summary:
 x  :   0 y  :   0 z  :   0 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:   7 r17:   8 r18:   2 r19:   2 r20:   2 
-r21:   8 r22:   0 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
+r13:   0 r14:   0 r15:   0 r16:  17 r17:   4 r18:   2 r19:   2 r20:   2 
+r21:   0 r22:   0 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
 r29:   0 r30:   0 r31:   0 
-Registers used: 6 out of 35 (17.1%)
+Registers used: 5 out of 35 (14.3%)
 
 "ATmega8" instruction use summary:
 .lds  :   0 .sts  :   0 adc   :   0 add   :   0 adiw  :   0 and   :   0 
 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
 brcc  :   0 brcs  :   0 breq  :   0 brge  :   0 brhc  :   0 brhs  :   0 
-brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 brne  :   4 
+brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 brne  :   3 
 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 brvs  :   0 
 bset  :   0 bst   :   0 cbi   :   0 cbr   :   0 clc   :   0 clh   :   0 
-cli   :   0 cln   :   0 clr   :   0 cls   :   0 clt   :   0 clv   :   0 
-clz   :   0 com   :   0 cp    :   0 cpc   :   0 cpi   :   1 cpse  :   0 
+cli   :   0 cln   :   0 clr   :   1 cls   :   0 clt   :   0 clv   :   0 
+clz   :   0 com   :   0 cp    :   0 cpc   :   0 cpi   :   0 cpse  :   0 
 dec   :   3 eor   :   0 fmul  :   0 fmuls :   0 fmulsu:   0 icall :   0 
-ijmp  :   0 in    :   0 inc   :   0 ld    :   0 ldd   :   0 ldi   :  12 
-lds   :   0 lpm   :   0 lsl   :   1 lsr   :   2 mov   :   0 movw  :   0 
+ijmp  :   0 in    :   0 inc   :   0 ld    :   0 ldd   :   0 ldi   :  13 
+lds   :   0 lpm   :   0 lsl   :   0 lsr   :   0 mov   :   1 movw  :   0 
 mul   :   0 muls  :   0 mulsu :   0 neg   :   0 nop   :   0 or    :   0 
-ori   :   0 out   :   4 pop   :   0 push  :   0 rcall :   1 ret   :   1 
-reti  :   0 rjmp  :   8 rol   :   0 ror   :   0 sbc   :   0 sbci  :   0 
-sbi   :   0 sbic  :   0 sbis  :   0 sbiw  :   0 sbr   :   0 sbrc  :   4 
-sbrs  :   2 sec   :   0 seh   :   0 sei   :   0 sen   :   0 ser   :   0 
+ori   :   0 out   :   8 pop   :   0 push  :   0 rcall :   2 ret   :   1 
+reti  :   2 rjmp  :   4 rol   :   0 ror   :   0 sbc   :   0 sbci  :   0 
+sbi   :   0 sbic  :   0 sbis  :   0 sbiw  :   0 sbr   :   0 sbrc  :   0 
+sbrs  :   0 sec   :   0 seh   :   0 sei   :   1 sen   :   0 ser   :   0 
 ses   :   0 set   :   0 sev   :   0 sez   :   0 sleep :   0 spm   :   0 
 st    :   0 std   :   0 sts   :   0 sub   :   0 subi  :   0 swap  :   0 
 tst   :   0 wdr   :   0 
-Instructions used: 12 out of 110 (10.9%)
+Instructions used: 11 out of 110 (10.0%)
 
 "ATmega8" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000056     86      0     86    8192   1.0%
+[.cseg] 0x000000 0x00004e     78      0     78    8192   1.0%
 [.dseg] 0x000060 0x000060      0      0      0    1024   0.0%
 [.eseg] 0x000000 0x000000      0      0      0     512   0.0%
 

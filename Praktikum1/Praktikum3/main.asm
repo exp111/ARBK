@@ -6,11 +6,11 @@
 .def temp = r16 ; r16 is our temp var
 .def led = r17
 
-.ORG 0x000 ; Reset Interrupt Vector
+.ORG 0 ; Reset Interrupt Vector
 rjmp INIT
-.ORG INT0
+.ORG INT0addr
 rjmp blinkGelb
-.ORG INT1
+.ORG INT1addr
 rjmp blinkRot
 ; Every other Interupt is unused here
 
@@ -21,28 +21,35 @@ INIT:
 	out SPH, temp
 	ldi temp, 3 ; 0b00000011
 	out DDRB, temp ; set b0 & b1 to out
+	ldi temp, 0 ; portd to 0
+	out DDRD, temp
+	ldi temp, 12 ; d2 & d3 pullup
+	out PORTD, temp
+	ldi temp, 192 ; enable int0 & int1
+	out GICR, temp
+	sei ; enable interupts
 
 	ldi led, 0
+	ldi temp, 0
 	
 loop:
+	mov temp, led
+	out PORTB, temp
+	rcall wait
+	clr temp
+	out PORTB, temp
+	rcall wait
 	rjmp loop
 
 blinkGelb:
-	clr led
-	rcall wait ; sleep
 	ldi led, 1
-	rcall wait ; sleep
-	rjmp blinkGelb
+	reti
 
 blinkRot:
-	clr led
-	rcall wait ; sleep
 	ldi led, 2
-	rcall wait ; sleep
-	rjmp blinkRot
+	reti
 
 wait: ; delay for 1/5s -> 200000 cycles (200ms * 1 MHz)
-	out PORTB, led
     ldi r18, 6
     ldi r19, 0
     ldi r20, 0

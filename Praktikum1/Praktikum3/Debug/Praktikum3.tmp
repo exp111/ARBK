@@ -22,12 +22,11 @@
   <FILE>Praktikum3.lss</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <INIT><FILE>C:\Users\Tim\Documents\Uni\ARBK\AtmelStudio\Praktikum1\Praktikum3\main.asm</FILE><LINE>16</LINE></INIT>
-  <mainloop><FILE>C:\Users\Tim\Documents\Uni\ARBK\AtmelStudio\Praktikum1\Praktikum3\main.asm</FILE><LINE>28</LINE></mainloop>
-  <changeDir><FILE>C:\Users\Tim\Documents\Uni\ARBK\AtmelStudio\Praktikum1\Praktikum3\main.asm</FILE><LINE>45</LINE></changeDir>
-  <notequalz><FILE>C:\Users\Tim\Documents\Uni\ARBK\AtmelStudio\Praktikum1\Praktikum3\main.asm</FILE><LINE>40</LINE></notequalz>
-  <wait><FILE>C:\Users\Tim\Documents\Uni\ARBK\AtmelStudio\Praktikum1\Praktikum3\main.asm</FILE><LINE>58</LINE></wait>
-  <change2><FILE>C:\Users\Tim\Documents\Uni\ARBK\AtmelStudio\Praktikum1\Praktikum3\main.asm</FILE><LINE>54</LINE></change2>
-  <L1><FILE>C:\Users\Tim\Documents\Uni\ARBK\AtmelStudio\Praktikum1\Praktikum3\main.asm</FILE><LINE>62</LINE></L1>
+  <INIT><FILE>C:\Users\Tim\Documents\Uni\ARBK\AtmelStudio\Praktikum1\Praktikum3\main.asm</FILE><LINE>17</LINE></INIT>
+  <blinkGelb><FILE>C:\Users\Tim\Documents\Uni\ARBK\AtmelStudio\Praktikum1\Praktikum3\main.asm</FILE><LINE>44</LINE></blinkGelb>
+  <blinkRot><FILE>C:\Users\Tim\Documents\Uni\ARBK\AtmelStudio\Praktikum1\Praktikum3\main.asm</FILE><LINE>48</LINE></blinkRot>
+  <loop><FILE>C:\Users\Tim\Documents\Uni\ARBK\AtmelStudio\Praktikum1\Praktikum3\main.asm</FILE><LINE>35</LINE></loop>
+  <wait><FILE>C:\Users\Tim\Documents\Uni\ARBK\AtmelStudio\Praktikum1\Praktikum3\main.asm</FILE><LINE>52</LINE></wait>
+  <L1><FILE>C:\Users\Tim\Documents\Uni\ARBK\AtmelStudio\Praktikum1\Praktikum3\main.asm</FILE><LINE>56</LINE></L1>
  </LABELS>
 </ASSEMBLER_INFO>
