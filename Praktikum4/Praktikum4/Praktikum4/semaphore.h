@@ -20,14 +20,10 @@ public:
 	{
 		std::unique_lock<std::mutex> lock(mtx);
 
-		value--;
-		int startValue = value;
-		if (value < 0)
+		while (value == 0)
 			cvar.wait(lock);
-		/*while (value <= startValue && value < 0)
-		{
-			Sleep(1);
-		}*/
+
+		value--;
 	}
 
 	void V()
